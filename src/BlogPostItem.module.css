@@ -1,0 +1,28 @@
+.blogPostItem {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+  background-color: #0e0a0a;
+}
+
+.blogPostItem:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.blogPostTitle {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+}
+
+.blogPostSummary {
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.blogPostDate {
+  font-size: 0.85rem;
+  color: #141010;
+}
