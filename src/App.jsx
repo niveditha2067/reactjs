@@ -1,61 +1,51 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import BlogPostList from './BlogPostList';
+import BlogPostDetail from './BlogPostDetail';
 
 const samplePosts = [
   {
-    id: '1',
-    title: 'Getting Started with React',
-    summary: 'Learn the basics of React and build your first application.',
+    id: 1,
+    title: 'Welcome to the Blog',
+    author: 'Alice',
     date: '2023-01-01',
-    url: '/posts/1',
+    content: '<p>This is the first post!</p>',
   },
   {
-    id: '2',
-    title: 'CSS Grid vs. Flexbox',
-    summary: 'A comparison of two powerful layout systems in CSS.',
-    date: '2023-02-15',
-    url: '/posts/2',
-  },
-  {
-    id: '3',
-    title: 'Accessibility in Web Development',
-    summary: 'Tips for making your web applications more accessible.',
-    date: '2023-03-10',
-    url: '/posts/3',
+    id: 2,
+    title: 'Second Post',
+    author: 'Bob',
+    date: '2023-01-05',
+    content: '<p>Another post with <strong>bold</strong> text.</p>',
   },
 ];
 
-const BlogPostPage = ({ title }) => (
-  <div style={{ padding: '2rem' }}>
-    <h1>{title}</h1>
-    <p>This is a placeholder for the full blog post content.</p>
-  </div>
-);
-
-const App = () => {
+function App() {
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div style={{ padding: '2rem' }}>
-              <h1>Blog Posts</h1>
-              <BlogPostList posts={samplePosts} />
-            </div>
-          }
-        />
-        {samplePosts.map((post) => (
-          <Route
-            key={post.id}
-            path={post.url}
-            element={<BlogPostPage title={post.title} />}
-          />
-        ))}
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<BlogPostList posts={samplePosts} />} />
+      <Route
+        path="/post/:id"
+        element={<PostDetailWrapper posts={samplePosts} />}
+      />
+    </Routes>
   );
-};
+}
 
+function PostDetailWrapper({ posts }) {
+  const { id } = useParams();
+  const post = posts.find((p) => p.id === parseInt(id));
+  if (!post) return <p>Post not found.</p>;
+
+  return (
+    <BlogPostDetail
+      title={post.title}
+      content={post.content}
+      author={post.author}
+      date={post.date}
+    />
+  );
+}
+
+import { useParams } from 'react-router-dom';
 export default App;
