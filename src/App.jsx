@@ -1,51 +1,58 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import BlogPostList from './BlogPostList';
-import BlogPostDetail from './BlogPostDetail';
-
-const samplePosts = [
-  {
-    id: 1,
-    title: 'Welcome to the Blog',
-    author: 'Alice',
-    date: '2023-01-01',
-    content: '<p>This is the first post!</p>',
-  },
-  {
-    id: 2,
-    title: 'Second Post',
-    author: 'Bob',
-    date: '2023-01-05',
-    content: '<p>Another post with <strong>bold</strong> text.</p>',
-  },
-];
+import BlogPostForm from './BlogPostForm';
 
 function App() {
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      title: 'Welcome!',
+      content: 'This is the first post.',
+      author: 'Admin',
+      date: '2023-06-01',
+    },
+  ]);
+
+  const navigate = useNavigate();
+
+  const handleCreate = (newPost) => {
+    const id = posts.length + 1;
+    setPosts([...posts, { ...newPost, id }]);
+    navigate('/');
+  };
+
+  const handleUpdate = (id, updatedPost) => {
+    setPosts(
+      posts.map((post) => (post.id === id ? { ...updatedPost, id } : post))
+    );
+    navigate('/');
+  };
+
   return (
     <Routes>
-      <Route path="/" element={<BlogPostList posts={samplePosts} />} />
+      <Route path="/" element={<BlogPostList posts={posts} />} />
+      <Route path="/create" element={<BlogPostForm onSubmit={handleCreate} />} />
       <Route
-        path="/post/:id"
-        element={<PostDetailWrapper posts={samplePosts} />}
+        path="/edit/:id"
+        element={<EditPost posts={posts} onUpdate={handleUpdate} />}
       />
     </Routes>
   );
 }
 
-function PostDetailWrapper({ posts }) {
+import { useParams } from 'react-router-dom';
+const EditPost = ({ posts, onUpdate }) => {
   const { id } = useParams();
   const post = posts.find((p) => p.id === parseInt(id));
   if (!post) return <p>Post not found.</p>;
 
   return (
-    <BlogPostDetail
-      title={post.title}
-      content={post.content}
-      author={post.author}
-      date={post.date}
+    <BlogPostForm
+      post={post}
+      onSubmit={(updatedPost) => onUpdate(post.id, updatedPost)}
     />
   );
-}
+};
 
-import { useParams } from 'react-router-dom';
 export default App;

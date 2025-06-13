@@ -1,12 +1,21 @@
 import React from 'react';
-import BlogPostItem from './BlogPostItem';
-import styles from './BlogPostList.module.css';
+import { Link } from 'react-router-dom';
 
 function BlogPostList({ posts }) {
   return (
-    <div className={styles.blogList}>
+    <div style={{ padding: '20px' }}>
+      <h2>Blog Posts</h2>
+      <Link to="/create">
+        <button style={{ marginBottom: '20px' }}>+ New Post</button>
+      </Link>
       {posts.map((post) => (
-        <BlogPostItem key={post.id} post={post} />
+        <div key={post.id} style={{ marginBottom: '20px' }}>
+          <h3>{post.title}</h3>
+          <p>By {post.author} on {post.date}</p>
+          <Link to={`/edit/${post.id}`}>
+            <button>Edit</button>
+          </Link>
+        </div>
       ))}
     </div>
   );
