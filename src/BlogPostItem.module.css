@@ -1,28 +1,20 @@
-.blogPostItem {
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: box-shadow 0.2s;
-  background-color: #0e0a0a;
+.postItem {
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 700px;
+  border-left: 4px solid #007bff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
 }
 
-.blogPostItem:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.postItem h2 {
+  font-size: 24px;
+  color: #333333;
+  margin-bottom: 10px;
 }
 
-.blogPostTitle {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 0.5rem;
-  text-decoration: none;
-}
-
-.blogPostSummary {
-  color: #666;
-  margin-bottom: 0.5rem;
-}
-
-.blogPostDate {
-  font-size: 0.85rem;
-  color: #141010;
+.postItem p {
+  font-size: 14px;
+  color: #666666;
 }
