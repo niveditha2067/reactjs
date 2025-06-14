@@ -23,15 +23,20 @@ function App() {
   };
 
   const handleUpdate = (id, updatedPost) => {
-    setPosts(
-      posts.map((post) => (post.id === id ? { ...updatedPost, id } : post))
-    );
+    setPosts(posts.map((post) => (post.id === id ? { ...updatedPost, id } : post)));
     navigate('/');
+  };
+
+  const handleDelete = (id) => {
+    const confirmed = window.confirm('Are you sure you want to delete this post?');
+    if (confirmed) {
+      setPosts(posts.filter((post) => post.id !== id));
+    }
   };
 
   return (
     <Routes>
-      <Route path="/" element={<BlogPostList posts={posts} />} />
+      <Route path="/" element={<BlogPostList posts={posts} onDelete={handleDelete} />} />
       <Route path="/create" element={<BlogPostForm onSubmit={handleCreate} />} />
       <Route
         path="/edit/:id"
