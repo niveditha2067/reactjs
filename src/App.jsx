@@ -1,5 +1,7 @@
+// src/App.jsx
 import React, { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useParams } from 'react-router-dom';
+import Layout from './Layout';
 import BlogPostList from './BlogPostList';
 import BlogPostForm from './BlogPostForm';
 
@@ -35,18 +37,20 @@ function App() {
   };
 
   return (
-    <Routes>
-      <Route path="/" element={<BlogPostList posts={posts} onDelete={handleDelete} />} />
-      <Route path="/create" element={<BlogPostForm onSubmit={handleCreate} />} />
-      <Route
-        path="/edit/:id"
-        element={<EditPost posts={posts} onUpdate={handleUpdate} />}
-      />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<BlogPostList posts={posts} onDelete={handleDelete} />} />
+        <Route path="/create" element={<BlogPostForm onSubmit={handleCreate} />} />
+        <Route
+          path="/edit/:id"
+          element={<EditPost posts={posts} onUpdate={handleUpdate} />}
+        />
+      </Routes>
+    </Layout>
   );
 }
 
-import { useParams } from 'react-router-dom';
+// Inline EditPost component using useParams
 const EditPost = ({ posts, onUpdate }) => {
   const { id } = useParams();
   const post = posts.find((p) => p.id === parseInt(id));
